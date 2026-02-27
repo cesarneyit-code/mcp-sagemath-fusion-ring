@@ -68,6 +68,80 @@ codex mcp add sagemath-mcp \
 5. `Use sagemath-mcp and show simple objects of G_2 level 3 with labels, weights, q-dimensions and twists.`
 6. `Use sagemath-mcp and give me modular data (S and T matrices) for G_2 level 3.`
 
+## Practical examples (clear and ready to use)
+
+### 1) Fusion rules
+Question:
+```text
+Use sagemath-mcp and give me the fusion rules of G_2 level 3.
+```
+
+Tool used:
+- `fusion_ring_fusion_rules(ct="G2", k=3)`
+
+What you get:
+- Full table of products `X_i * X_j = sum_k N^k_{ij} X_k`
+- Canonical index order `[i]` for simple objects
+- Output ready to cite in notes/classes
+
+### 2) Modular data (S and T)
+Question:
+```text
+Use sagemath-mcp and give me modular data (S and T matrices) for G_2 level 3.
+```
+
+Tool used:
+- `fusion_ring_modular_data(ct="G2", k=3, unitary=True)`
+
+What you get:
+- `S` matrix (exact cyclotomic form)
+- `T` matrix (exact, diagonal twists)
+- Index map `i -> simple object` to interpret rows/columns
+- Global quantum dimension and Virasoro central charge
+
+Numeric approximation version:
+```text
+Use sagemath-mcp and give me modular data for G_2 level 3 with numerical approximation (25 digits).
+```
+
+### 3) Simple objects explained
+Question:
+```text
+Use sagemath-mcp and show simple objects of G_2 level 3 with labels, weights, q-dimensions and twists.
+```
+
+Tool used:
+- `fusion_ring_simple_objects(ct="G2", k=3)`
+
+What you get:
+- For each simple object:
+  - index `[i]`
+  - label (e.g. `G23(1,0)`)
+  - weight
+  - quantum dimension
+  - twist
+  - ribbon
+- Explicit statement that this same index order is used in `S`, `T`, and fusion rules
+
+### 4) Custom query on a fixed ring
+Question:
+```text
+Use sagemath-mcp and evaluate on FusionRing("G2",3): FR.s_ij(simples[1], simples[2]).
+```
+
+Tool used:
+- `fusion_ring_eval(ct="G2", k=3, expression="FR.s_ij(simples[1], simples[2])")`
+
+What you get:
+- Exact single matrix entry in cyclotomic form
+- Ideal when you need one coefficient/invariant and not the full tables
+
+## Prompt templates (copy/paste)
+1. `Use sagemath-mcp and give me fusion rules for <CartanType> level <k>.`
+2. `Use sagemath-mcp and give me modular data (S and T matrices) for <CartanType> level <k>.`
+3. `Use sagemath-mcp and explain the simple objects for <CartanType> level <k> (labels, weights, q-dimensions, twists).`
+4. `Use sagemath-mcp and compute <exact expression> on FusionRing("<CartanType>", <k>).`
+
 ## Notes
 1. Some Sage versions expose `test_braid_representation` instead of `check_braid_representation`.
 2. Use exact outputs first (cyclotomic form), then request numerical approximation if needed.
