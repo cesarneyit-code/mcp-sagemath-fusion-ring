@@ -1,12 +1,35 @@
 [project]
-name = "mcp-sagemath-server"
-version = "0.1.0"
-description = "Local MCP server for SageMath computations"
+name = "mcp-sagemath-fusion-rings"
+version = "0.2.0"
+description = "MCP server for SageMath with advanced FusionRing workflows"
 requires-python = ">=3.10"
+readme = "README.md"
+license = "MIT"
+authors = [
+  {name = "Cesar Galindo"}
+]
 dependencies = [
   "mcp[cli]>=1.2.0",
 ]
+keywords = ["mcp", "sagemath", "fusion-rings", "mathematics", "sage"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.scripts]
+mcp-sagemath-fusion-rings = "server:main"
+
+[project.urls]
+Homepage = "https://github.com/cesarneyit-code/mcp-sagemath-fusion-ring"
+Repository = "https://github.com/cesarneyit-code/mcp-sagemath-fusion-ring"
+Issues = "https://github.com/cesarneyit-code/mcp-sagemath-fusion-ring/issues"
 
 [build-system]
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["server"]

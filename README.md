@@ -20,12 +20,24 @@ Public MCP server and skill bundle focused on `sage.algebras.fusion_rings` workf
 1. SageMath installed locally.
 2. `uv` installed (`https://docs.astral.sh/uv/`).
 
+## Install options for other clients
+
+### Option A: PyPI / `uvx` (recommended)
+```bash
+uvx mcp-sagemath-fusion-rings
+```
+
+### Option B: npm / `npx` wrapper
+```bash
+npx -y mcp-sagemath-fusion-rings
+```
+
 ## Register MCP in Codex
 
 ```bash
 codex mcp add sagemath-mcp \
   --env SAGE_CMD=/Applications/SageMath-10-1.app/Contents/Frameworks/Sage.framework/Versions/Current/venv/bin/sage \
-  -- /Users/cesargalindo/.local/bin/uv run --directory /ABSOLUTE/PATH/TO/mcp-sagemath-server server.py
+  -- /Users/cesargalindo/.local/bin/uvx mcp-sagemath-fusion-rings
 ```
 
 ## Register MCP in Claude/Cursor style JSON
@@ -34,12 +46,9 @@ codex mcp add sagemath-mcp \
 {
   "mcpServers": {
     "sagemath-mcp": {
-      "command": "/Users/cesargalindo/.local/bin/uv",
+      "command": "/Users/cesargalindo/.local/bin/uvx",
       "args": [
-        "run",
-        "--directory",
-        "/ABSOLUTE/PATH/TO/mcp-sagemath-server",
-        "server.py"
+        "mcp-sagemath-fusion-rings"
       ],
       "env": {
         "SAGE_CMD": "/Applications/SageMath-10-1.app/Contents/Frameworks/Sage.framework/Versions/Current/venv/bin/sage"
@@ -57,3 +66,18 @@ codex mcp add sagemath-mcp \
 ## Notes
 1. Some Sage versions expose `test_braid_representation` instead of `check_braid_representation`.
 2. Use exact outputs first (cyclotomic form), then request numerical approximation if needed.
+3. Publication workflows are included:
+- `.github/workflows/publish-pypi.yml` (tag `pypi-v*`)
+- `.github/workflows/publish-npm.yml` (tag `npm-v*`)
+
+## Release tags
+1. PyPI release:
+```bash
+git tag pypi-v0.2.0
+git push origin pypi-v0.2.0
+```
+2. npm wrapper release:
+```bash
+git tag npm-v0.2.0
+git push origin npm-v0.2.0
+```

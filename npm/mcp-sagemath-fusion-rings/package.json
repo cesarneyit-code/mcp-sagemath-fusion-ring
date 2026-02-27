@@ -1,0 +1,23 @@
+{
+  "name": "mcp-sagemath-fusion-rings",
+  "version": "0.2.0",
+  "description": "npx wrapper for the PyPI package mcp-sagemath-fusion-rings",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cesarneyit-code/mcp-sagemath-fusion-ring.git",
+    "directory": "npm/mcp-sagemath-fusion-rings"
+  },
+  "bin": {
+    "mcp-sagemath-fusion-rings": "bin/mcp-sagemath-fusion-rings.js"
+  },
+  "keywords": [
+    "mcp",
+    "sagemath",
+    "fusion-rings",
+    "model-context-protocol"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

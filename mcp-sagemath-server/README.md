@@ -1,6 +1,6 @@
-# mcp-sagemath-server
+# mcp-sagemath-fusion-rings
 
-Minimal MCP server to run SageMath from Codex/Claude.
+MCP server to run SageMath from Codex/Claude with dedicated `FusionRing` helpers.
 
 ## Tools included
 1. `sage_version`
@@ -12,7 +12,7 @@ Minimal MCP server to run SageMath from Codex/Claude.
 
 ## Local run (for development)
 ```bash
-cd /Users/cesargalindo/Documents/docencia/presentaciones/mcp-sagemath-server
+cd /ABSOLUTE/PATH/TO/mcp-sagemath-fusion-ring/mcp-sagemath-server
 uv run server.py
 ```
 
@@ -21,9 +21,21 @@ If your Sage command is not `sage`, set:
 export SAGE_CMD="/path/to/sage"
 ```
 
+## Install from PyPI (planned target)
+```bash
+uv tool install mcp-sagemath-fusion-rings
+```
+
+Or one-shot execution:
+```bash
+uvx mcp-sagemath-fusion-rings
+```
+
 ## Register in Codex
 ```bash
-codex mcp add sagemath-mcp -- /Users/cesargalindo/.local/bin/uv run --directory /Users/cesargalindo/Documents/docencia/presentaciones/mcp-sagemath-server server.py
+codex mcp add sagemath-mcp \
+  --env SAGE_CMD=/path/to/sage \
+  -- /Users/cesargalindo/.local/bin/uvx mcp-sagemath-fusion-rings
 ```
 
 ## Example requests
