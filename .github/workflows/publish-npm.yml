@@ -13,6 +13,8 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
     defaults:
       run:
         working-directory: npm/mcp-sagemath-fusion-rings
@@ -30,11 +32,11 @@ jobs:
         run: npm pack --dry-run
 
       - name: Publish to npm (NPM_TOKEN)
-        if: ${{ secrets.NPM_TOKEN != '' }}
+        if: ${{ env.HAS_NPM_TOKEN == 'true' }}
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm (Trusted Publishing)
-        if: ${{ secrets.NPM_TOKEN == '' }}
+        if: ${{ env.HAS_NPM_TOKEN != 'true' }}
         run: npm publish --access public --provenance
