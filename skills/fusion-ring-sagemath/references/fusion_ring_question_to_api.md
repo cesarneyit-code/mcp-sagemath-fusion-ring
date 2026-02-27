@@ -15,6 +15,8 @@ simples = [FR(w) for w in order]
 1. "Dame la matriz S" / "S-matrix unitaria"
 - `FR.s_matrix()`
 - `FR.s_matrix(unitary=True)`
+- Prefer MCP tool for full modular context:
+  - `fusion_ring_modular_data(ct="G2", k=3, unitary=True)`
 
 2. "Dame la entrada S_{ij}"
 - `FR.s_ij(simples[i], simples[j])`
@@ -26,44 +28,54 @@ simples = [FR(w) for w in order]
 - For full fusion table/rules in one shot:
   - `fusion_ring_fusion_rules(ct="G2", k=3)` (via MCP tool)
 
-4. "¿Es multiplicity-free?"
+4. "Dame la matriz T" / "modular data"
+- `FR.twists_matrix()`
+- Prefer MCP tool for S+T+indexing+interpretation:
+  - `fusion_ring_modular_data(ct="G2", k=3, unitary=True)`
+
+5. "Explícame los objetos simples / labels / pesos / dimensiones cuánticas / twists"
+- `fusion_ring_simple_objects(ct="G2", k=3)`
+- Optional numeric output:
+  - `fusion_ring_simple_objects(ct="G2", k=3, include_numeric_approx=True, digits=30)`
+
+6. "¿Es multiplicity-free?"
 - `FR.is_multiplicity_free()`
 
-5. "Dimensión cuántica global / orden cuántico total"
+7. "Dimensión cuántica global / orden cuántico total"
 - `FR.global_q_dimension()`
 - `FR.total_q_order()`
 
-6. "Twists / ribbon / carga central"
+8. "Twists / ribbon / carga central"
 - `FR.twists_matrix()`
 - `simples[i].twist()`
 - `simples[i].ribbon()`
 - `FR.virasoro_central_charge()`
 
-7. "Conjugación dual y matriz de conjugación"
+9. "Conjugación dual y matriz de conjugación"
 - `FR.conj_matrix()`
 
-8. "R-matrix"
+10. "R-matrix"
 - `FR.r_matrix(simples[i], simples[j], simples[k])`
 
-9. "F-symbols / pentagon relations"
+11. "F-symbols / pentagon relations"
 - `Fm = FR.get_fmatrix(...)`
 - `Fm.get_defining_equations(...)`
 - `Fm.find_cyclotomic_solution(...)`
 - `Fm.fmat(a,b,c,d,x,y)` or `Fm.fmatrix(a,b,c,d)`
 
-10. "Braid generators / validar relaciones de trenza"
+12. "Braid generators / validar relaciones de trenza"
 - `FR.get_braid_generators(...)`
 - `FR.gens_satisfy_braid_gp_rels(sig, ...)`
 - Version-dependent:
  1. `FR.check_braid_representation(...)`
  2. or `FR.test_braid_representation(...)`
 
-11. "Campo ciclotómico / raíces de unidad"
+13. "Campo ciclotómico / raíces de unidad"
 - `FR.field()`
 - `FR.root_of_unity(r)`
 - If needed: rebuild ring with explicit `cyclotomic_order=...`
 
-12. "Etiquetas de objetos simples"
+14. "Etiquetas de objetos simples"
 - `FR.fusion_labels(...)`
 - `FR.fusion_labels()` to reset
 

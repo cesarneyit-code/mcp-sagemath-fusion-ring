@@ -24,9 +24,15 @@ Use this skill to move from conceptual/math phrasing to executable expressions w
 - Use `references/fusion_ring_question_to_api.md` for intent-to-method mapping.
 - Use `references/fusion_rings_package_map.md` for full module/method coverage.
 - For "fusion rules of <type> level <k>", prefer `fusion_ring_fusion_rules(ct, k)` when available.
+- For "modular data", "S-matrix", "T-matrix", prefer `fusion_ring_modular_data(ct, k, ...)`.
+- For "simple objects", "labels", "weights", "q-dimensions", "twists", prefer `fusion_ring_simple_objects(ct, k, ...)`.
 
 4. Execute and explain.
 - Prefer the `fusion_ring_eval` tool from `sagemath-mcp` when available.
+- Prefer dedicated tools when available:
+ 1. `fusion_ring_fusion_rules`
+ 2. `fusion_ring_simple_objects`
+ 3. `fusion_ring_modular_data`
 - Otherwise run equivalent Sage code using `sage_run`.
 - Always return:
  1. exact call used,

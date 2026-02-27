@@ -425,6 +425,158 @@ def fusion_ring_fusion_rules(
     return _format_result(result)
 
 
+@mcp.tool()
+def fusion_ring_simple_objects(
+    ct: str,
+    k: int,
+    conjugate: bool = False,
+    cyclotomic_order: int | None = None,
+    fusion_labels: str | None = None,
+    inject_variables: bool = False,
+    include_numeric_approx: bool = False,
+    digits: int = 20,
+    timeout_seconds: int = 90,
+) -> str:
+    """Return detailed simple-object data for FusionRing(ct, k).
+
+    Args:
+        ct: Cartan type, e.g. "A2", "G2", "['A',2]".
+        k: Fusion level.
+        conjugate: Build the conjugate ring.
+        cyclotomic_order: Optional cyclotomic order override.
+        fusion_labels: Optional labels setup.
+        inject_variables: Passed to FusionRing constructor.
+        include_numeric_approx: Also print numerical approximations.
+        digits: Precision for numerical approximation.
+        timeout_seconds: Max runtime in seconds.
+    """
+    safe_digits = max(5, min(int(digits), 100))
+    code = (
+        "from sage.all import *\n"
+        "from sage.misc.sage_eval import sage_eval\n"
+        "from sage.algebras.fusion_rings.fusion_ring import FusionRing\n"
+        f"ct_text = {ct!r}\n"
+        "try:\n"
+        "    ct_obj = sage_eval(ct_text, locals())\n"
+        "except Exception:\n"
+        "    ct_obj = ct_text\n"
+        "kwargs = {}\n"
+        f"kwargs['conjugate'] = {bool(conjugate)!r}\n"
+        f"kwargs['inject_variables'] = {bool(inject_variables)!r}\n"
+        f"kwargs['k'] = {int(k)!r}\n"
+        f"cyclo = {cyclotomic_order!r}\n"
+        "if cyclo is not None:\n"
+        "    kwargs['cyclotomic_order'] = cyclo\n"
+        f"lbls = {fusion_labels!r}\n"
+        "if lbls is not None:\n"
+        "    kwargs['fusion_labels'] = lbls\n"
+        "FR = FusionRing(ct_obj, **kwargs)\n"
+        "order = FR.get_order()\n"
+        "simples = [FR(w) for w in order]\n"
+        "print(f'Simple objects for FusionRing(ct={ct_text}, k={kwargs[\"k\"]})')\n"
+        "print('Interpretation: index [i] is the canonical order used in rows/columns of S and T matrices and in fusion rules.')\n"
+        "print(f'Rank: {len(simples)}')\n"
+        "print('')\n"
+        "for i, s in enumerate(simples):\n"
+        "    wt = s.weight()\n"
+        "    qd = s.q_dimension()\n"
+        "    tw = s.twist()\n"
+        "    rb = s.ribbon()\n"
+        "    print(f'[{i}] {s} | weight={wt} | q_dimension={qd} | twist={tw} | ribbon={rb} | is_simple={s.is_simple_object()}')\n"
+        f"    if {bool(include_numeric_approx)!r}:\n"
+        f"        qd_num = CC(qd).n({safe_digits})\n"
+        f"        tw_num = CC(tw).n({safe_digits})\n"
+        f"        rb_num = CC(rb).n({safe_digits})\n"
+        "        print(f'    numeric: q_dimension~{qd_num} | twist~{tw_num} | ribbon~{rb_num}')\n"
+    )
+    result = _run_sage(code, timeout_seconds=timeout_seconds)
+    return _format_result(result)
+
+
+@mcp.tool()
+def fusion_ring_modular_data(
+    ct: str,
+    k: int,
+    unitary: bool = True,
+    conjugate: bool = False,
+    cyclotomic_order: int | None = None,
+    fusion_labels: str | None = None,
+    inject_variables: bool = False,
+    include_numeric_approx: bool = False,
+    digits: int = 20,
+    timeout_seconds: int = 120,
+) -> str:
+    """Return modular data (S-matrix, T-matrix) with simple-object indexing info.
+
+    Args:
+        ct: Cartan type, e.g. "A2", "G2", "['A',2]".
+        k: Fusion level.
+        unitary: Whether to request unitary S-matrix normalization.
+        conjugate: Build the conjugate ring.
+        cyclotomic_order: Optional cyclotomic order override.
+        fusion_labels: Optional labels setup.
+        inject_variables: Passed to FusionRing constructor.
+        include_numeric_approx: Also print numerical approximations.
+        digits: Precision for numerical approximation.
+        timeout_seconds: Max runtime in seconds.
+    """
+    safe_digits = max(5, min(int(digits), 100))
+    code = (
+        "from sage.all import *\n"
+        "from sage.misc.sage_eval import sage_eval\n"
+        "from sage.algebras.fusion_rings.fusion_ring import FusionRing\n"
+        f"ct_text = {ct!r}\n"
+        "try:\n"
+        "    ct_obj = sage_eval(ct_text, locals())\n"
+        "except Exception:\n"
+        "    ct_obj = ct_text\n"
+        "kwargs = {}\n"
+        f"kwargs['conjugate'] = {bool(conjugate)!r}\n"
+        f"kwargs['inject_variables'] = {bool(inject_variables)!r}\n"
+        f"kwargs['k'] = {int(k)!r}\n"
+        f"cyclo = {cyclotomic_order!r}\n"
+        "if cyclo is not None:\n"
+        "    kwargs['cyclotomic_order'] = cyclo\n"
+        f"lbls = {fusion_labels!r}\n"
+        "if lbls is not None:\n"
+        "    kwargs['fusion_labels'] = lbls\n"
+        "FR = FusionRing(ct_obj, **kwargs)\n"
+        "order = FR.get_order()\n"
+        "simples = [FR(w) for w in order]\n"
+        f"S = FR.s_matrix(unitary={bool(unitary)!r})\n"
+        "T = FR.twists_matrix()\n"
+        "print(f'Modular data for FusionRing(ct={ct_text}, k={kwargs[\"k\"]})')\n"
+        f"print(f'S normalization: unitary={bool(unitary)!r}')\n"
+        "print('Interpretation: row/column i corresponds to simple object [i] listed below.')\n"
+        "print(f'Rank: {len(simples)}')\n"
+        "print('Simple objects (index -> label, weight):')\n"
+        "for i, s in enumerate(simples):\n"
+        "    print(f'  [{i}] {s} | weight={s.weight()}')\n"
+        "print('')\n"
+        "print('S-matrix (exact):')\n"
+        "print(S)\n"
+        "print('')\n"
+        "print('T-matrix (exact):')\n"
+        "print(T)\n"
+        "print('')\n"
+        "print('Twists on simples (T diagonal entries):')\n"
+        "for i, s in enumerate(simples):\n"
+        "    print(f'  [{i}] {s}: {s.twist()}')\n"
+        "print('')\n"
+        "print(f'Global quantum dimension: {FR.global_q_dimension()}')\n"
+        "print(f'Virasoro central charge: {FR.virasoro_central_charge()}')\n"
+        f"if {bool(include_numeric_approx)!r}:\n"
+        "    print('')\n"
+        f"    print(f'S-matrix (numeric, digits={safe_digits}):')\n"
+        f"    print(S.n({safe_digits}))\n"
+        "    print('')\n"
+        f"    print(f'T-matrix (numeric, digits={safe_digits}):')\n"
+        f"    print(T.n({safe_digits}))\n"
+    )
+    result = _run_sage(code, timeout_seconds=timeout_seconds)
+    return _format_result(result)
+
+
 def main() -> None:
     logger.info("Starting mcp-sagemath-server with command: %s", _sage_command())
     mcp.run(transport="stdio")

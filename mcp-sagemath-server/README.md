@@ -10,6 +10,8 @@ MCP server to run SageMath from Codex/Claude with dedicated `FusionRing` helpers
 5. `fusion_ring_api_catalog`
 6. `fusion_ring_eval`
 7. `fusion_ring_fusion_rules`
+8. `fusion_ring_simple_objects`
+9. `fusion_ring_modular_data`
 
 ## Local run (for development)
 ```bash
@@ -38,3 +40,5 @@ codex mcp add sagemath-mcp \
 5. `Usa sagemath-mcp y dame el catalogo API de fusion_ring.`
 6. `Usa sagemath-mcp y evalua en FusionRing("A2",2): FR.s_matrix(unitary=True).`
 7. `Use sagemath-mcp and give me the fusion rules of G_2 level 3.`
+8. `Use sagemath-mcp and show simple objects for G_2 level 3 with q-dimensions and twists.`
+9. `Use sagemath-mcp and give me modular data (S and T matrices) for G_2 level 3.`
