@@ -23,6 +23,8 @@ simples = [FR(w) for w in order]
 3. "Coeficientes de fusión"
 - `FR.Nk_ij(simples[i], simples[j], simples[k])`
 - `FR.N_ijk(simples[i], simples[j], simples[k])`
+- For full fusion table/rules in one shot:
+  - `fusion_ring_fusion_rules(ct="G2", k=3)` (via MCP tool)
 
 4. "¿Es multiplicity-free?"
 - `FR.is_multiplicity_free()`

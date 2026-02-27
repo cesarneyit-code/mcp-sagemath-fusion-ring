@@ -61,6 +61,7 @@ codex mcp add sagemath-mcp \
 1. `Use sagemath-mcp and show the fusion_ring API catalog.`
 2. `Use sagemath-mcp and evaluate on FusionRing("A2",2): FR.s_matrix(unitary=True).`
 3. `Use sagemath-mcp and compute Nk_ij for selected simple objects in G2 level 1.`
+4. `Use sagemath-mcp and give me the fusion rules of G_2 level 3.`
 
 ## Notes
 1. Some Sage versions expose `test_braid_representation` instead of `check_braid_representation`.

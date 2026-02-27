@@ -23,6 +23,7 @@ Use this skill to move from conceptual/math phrasing to executable expressions w
 3. Map user intent to API method(s).
 - Use `references/fusion_ring_question_to_api.md` for intent-to-method mapping.
 - Use `references/fusion_rings_package_map.md` for full module/method coverage.
+- For "fusion rules of <type> level <k>", prefer `fusion_ring_fusion_rules(ct, k)` when available.
 
 4. Execute and explain.
 - Prefer the `fusion_ring_eval` tool from `sagemath-mcp` when available.

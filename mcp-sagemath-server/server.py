@@ -358,6 +358,73 @@ def fusion_ring_eval(
     return _format_result(result)
 
 
+@mcp.tool()
+def fusion_ring_fusion_rules(
+    ct: str,
+    k: int,
+    conjugate: bool = False,
+    cyclotomic_order: int | None = None,
+    fusion_labels: str | None = None,
+    inject_variables: bool = False,
+    timeout_seconds: int = 90,
+) -> str:
+    """Return full fusion rules N^k_{ij} for FusionRing(ct, k).
+
+    Args:
+        ct: Cartan type, e.g. "A2", "G2", "['A',2]".
+        k: Fusion level.
+        conjugate: Build the conjugate ring.
+        cyclotomic_order: Optional cyclotomic order override.
+        fusion_labels: Optional labels setup.
+        inject_variables: Passed to FusionRing constructor.
+        timeout_seconds: Max runtime in seconds.
+    """
+    code = (
+        "from sage.all import *\n"
+        "from sage.misc.sage_eval import sage_eval\n"
+        "from sage.algebras.fusion_rings.fusion_ring import FusionRing\n"
+        f"ct_text = {ct!r}\n"
+        "try:\n"
+        "    ct_obj = sage_eval(ct_text, locals())\n"
+        "except Exception:\n"
+        "    ct_obj = ct_text\n"
+        "kwargs = {}\n"
+        f"kwargs['conjugate'] = {bool(conjugate)!r}\n"
+        f"kwargs['inject_variables'] = {bool(inject_variables)!r}\n"
+        f"kwargs['k'] = {int(k)!r}\n"
+        f"cyclo = {cyclotomic_order!r}\n"
+        "if cyclo is not None:\n"
+        "    kwargs['cyclotomic_order'] = cyclo\n"
+        f"lbls = {fusion_labels!r}\n"
+        "if lbls is not None:\n"
+        "    kwargs['fusion_labels'] = lbls\n"
+        "FR = FusionRing(ct_obj, **kwargs)\n"
+        "order = FR.get_order()\n"
+        "simples = [FR(w) for w in order]\n"
+        "labels = [str(s) for s in simples]\n"
+        "print(f'Fusion rules for FusionRing(ct={ct_text}, k={kwargs[\"k\"]})')\n"
+        "print(f'Rank: {len(simples)}')\n"
+        "print('Simple object order:')\n"
+        "for idx, lbl in enumerate(labels):\n"
+        "    print(f'  [{idx}] {lbl}')\n"
+        "print('')\n"
+        "for i, a in enumerate(simples):\n"
+        "    for j, b in enumerate(simples):\n"
+        "        terms = []\n"
+        "        for kk, c in enumerate(simples):\n"
+        "            coeff = FR.Nk_ij(a, b, c)\n"
+        "            if coeff:\n"
+        "                if coeff == 1:\n"
+        "                    terms.append(labels[kk])\n"
+        "                else:\n"
+        "                    terms.append(f'{coeff}*{labels[kk]}')\n"
+        "        rhs = ' + '.join(terms) if terms else '0'\n"
+        "        print(f'[{i}] {labels[i]} * [{j}] {labels[j]} = {rhs}')\n"
+    )
+    result = _run_sage(code, timeout_seconds=timeout_seconds)
+    return _format_result(result)
+
+
 def main() -> None:
     logger.info("Starting mcp-sagemath-server with command: %s", _sage_command())
     mcp.run(transport="stdio")
