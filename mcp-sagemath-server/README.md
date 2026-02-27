@@ -33,12 +33,12 @@ codex mcp add sagemath-mcp \
 ```
 
 ## Example requests
-1. `Usa sagemath-mcp para calcular la version de Sage.`
-2. `Usa sagemath-mcp y evalua factor(x^4 - 1).`
-3. `Usa sagemath-mcp para resolver x^2 - 5*x + 6 == 0 en x.`
-4. `Usa sagemath-mcp y ejecuta codigo Sage para una matriz 3x3 y su determinante.`
-5. `Usa sagemath-mcp y dame el catalogo API de fusion_ring.`
-6. `Usa sagemath-mcp y evalua en FusionRing("A2",2): FR.s_matrix(unitary=True).`
+1. `Use sagemath-mcp and show the Sage version.`
+2. `Use sagemath-mcp and evaluate factor(x^4 - 1).`
+3. `Use sagemath-mcp and solve x^2 - 5*x + 6 == 0 in x.`
+4. `Use sagemath-mcp and run Sage code for a 3x3 matrix and its determinant.`
+5. `Use sagemath-mcp and show the fusion_ring API catalog.`
+6. `Use sagemath-mcp and evaluate on FusionRing("A2",2): FR.s_matrix(unitary=True).`
 7. `Use sagemath-mcp and give me the fusion rules of G_2 level 3.`
 8. `Use sagemath-mcp and show simple objects for G_2 level 3 with q-dimensions and twists.`
 9. `Use sagemath-mcp and give me modular data (S and T matrices) for G_2 level 3.`

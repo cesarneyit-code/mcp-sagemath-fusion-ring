@@ -55,13 +55,13 @@ Use this skill to move from conceptual/math phrasing to executable expressions w
 
 ## Minimal Examples
 
-1. User asks: "Calcula la S-matrix unitaria para A2 nivel 2."
+1. User asks: "Compute the unitary S-matrix for A2 level 2."
 - Call: `FR = FusionRing("A2", 2); FR.s_matrix(unitary=True)`
 
-2. User asks: "Dame N^k_{ij} para i,j,k concretos."
+2. User asks: "Give me N^k_{ij} for concrete i,j,k."
 - Call: `FR.Nk_ij(i, j, k)` after defining basis elements from `FR.get_order()`.
 
-3. User asks: "Quiero F-symbols."
+3. User asks: "I want F-symbols."
 - Call: `Fm = FR.get_fmatrix(...); Fm.fmat(...)` / `Fm.fmatrix(...)` depending on requested coefficient/matrix.
 
 ## References
@@ -69,5 +69,5 @@ Use this skill to move from conceptual/math phrasing to executable expressions w
 1. Full package map and methods:
 - `references/fusion_rings_package_map.md`
 
-2. Natural language to API mapping (Spanish prompts):
+2. Natural language to API mapping:
 - `references/fusion_ring_question_to_api.md`
