@@ -1,0 +1,12 @@
+[project]
+name = "mcp-sagemath-server"
+version = "0.1.0"
+description = "Local MCP server for SageMath computations"
+requires-python = ">=3.10"
+dependencies = [
+  "mcp[cli]>=1.2.0",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

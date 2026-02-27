@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fusion Ring SageMath"
+  short_description: "Flujo experto para preguntas de FusionRing en SageMath"
+  default_prompt: "Analiza y resuelve mi consulta con FusionRing en SageMath, mostrando la llamada exacta y el resultado interpretable."
