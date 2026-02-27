@@ -69,6 +69,9 @@ codex mcp add sagemath-mcp \
 3. Publication workflows are included:
 - `.github/workflows/publish-pypi.yml` (tag `pypi-v*`)
 - `.github/workflows/publish-npm.yml` (tag `npm-v*`)
+4. Publish auth fallback is enabled:
+- PyPI: uses `PYPI_API_TOKEN` if present; otherwise uses Trusted Publishing (OIDC).
+- npm: uses `NPM_TOKEN` if present; otherwise uses Trusted Publishing (`npm publish --provenance`).
 
 ## Release tags
 1. PyPI release:
@@ -81,3 +84,6 @@ git push origin pypi-v0.2.0
 git tag npm-v0.2.0
 git push origin npm-v0.2.0
 ```
+3. If workflows fail with auth errors:
+- Set GitHub secret `PYPI_API_TOKEN` (PyPI API token for project/package scope).
+- Set GitHub secret `NPM_TOKEN` (npm automation token), or configure npm Trusted Publishing for this repo.

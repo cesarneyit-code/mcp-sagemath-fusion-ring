@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   publish:
@@ -28,7 +29,12 @@ jobs:
       - name: Pack check
         run: npm pack --dry-run
 
-      - name: Publish to npm
+      - name: Publish to npm (NPM_TOKEN)
+        if: ${{ secrets.NPM_TOKEN != '' }}
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to npm (Trusted Publishing)
+        if: ${{ secrets.NPM_TOKEN == '' }}
+        run: npm publish --access public --provenance
