@@ -142,6 +142,68 @@ What you get:
 3. `Use sagemath-mcp and explain the simple objects for <CartanType> level <k> (labels, weights, q-dimensions, twists).`
 4. `Use sagemath-mcp and compute <exact expression> on FusionRing("<CartanType>", <k>).`
 
+## Complete natural-language capability list
+
+1. Sage environment/version checks
+Ask: `Use sagemath-mcp and show the Sage version.`
+
+2. General symbolic evaluation
+Ask: `Use sagemath-mcp and evaluate factor(x^6 - 1).`
+
+3. Equation solving
+Ask: `Use sagemath-mcp and solve x^2 - 5*x + 6 == 0 in x.`
+
+4. Custom Sage snippets (multi-line)
+Ask: `Use sagemath-mcp and run Sage code to define a matrix and compute its determinant.`
+
+5. Fusion-ring API discovery
+Ask: `Use sagemath-mcp and show the fusion_ring API catalog.`
+
+6. Build-and-evaluate on a specific ring
+Ask: `Use sagemath-mcp and evaluate on FusionRing("A2",2): FR.global_q_dimension().`
+
+7. Full fusion rules
+Ask: `Use sagemath-mcp and give me the fusion rules of G_2 level 3.`
+
+8. Single fusion coefficient queries
+Ask: `Use sagemath-mcp and evaluate on FusionRing("G2",3): FR.Nk_ij(simples[1], simples[2], simples[3]).`
+
+9. Modular data (S and T, exact)
+Ask: `Use sagemath-mcp and give me modular data (S and T matrices) for G_2 level 3.`
+
+10. Modular data (numeric approximation)
+Ask: `Use sagemath-mcp and give me modular data for G_2 level 3 with numerical approximation (30 digits).`
+
+11. S-matrix entry queries
+Ask: `Use sagemath-mcp and evaluate on FusionRing("G2",3): FR.s_ij(simples[1], simples[2]).`
+
+12. Simple objects explained
+Ask: `Use sagemath-mcp and show simple objects of G_2 level 3 with labels, weights, q-dimensions and twists.`
+
+13. Twists/ribbon/central-charge interpretation
+Ask: `Use sagemath-mcp and explain twists, ribbon values, and the Virasoro central charge for G_2 level 3.`
+
+14. Multiplicity-free checks
+Ask: `Use sagemath-mcp and check whether FusionRing("G2",3) is multiplicity-free.`
+
+15. R-matrix and braid-related requests
+Ask: `Use sagemath-mcp and evaluate an R-matrix coefficient for selected simple objects in G_2 level 3.`
+
+16. F-symbol / F-matrix workflows
+Ask: `Use sagemath-mcp and compute F-symbol data for a chosen FusionRing and explain the result.`
+
+17. Field/roots-of-unity and cyclotomic options
+Ask: `Use sagemath-mcp and explain the cyclotomic field and root-of-unity data for G_2 level 3.`
+
+18. Conjugate-ring and conjugation matrix requests
+Ask: `Use sagemath-mcp and compute the conjugation matrix for FusionRing("G2",3).`
+
+19. Label customization/reset requests
+Ask: `Use sagemath-mcp and set custom fusion labels, then show the updated simple-object view.`
+
+20. Bilingual phrasing support in prompts
+You can ask in English or Spanish; tool execution is the same and outputs remain mathematically explicit.
+
 ## Notes
 1. Some Sage versions expose `test_braid_representation` instead of `check_braid_representation`.
 2. Use exact outputs first (cyclotomic form), then request numerical approximation if needed.
