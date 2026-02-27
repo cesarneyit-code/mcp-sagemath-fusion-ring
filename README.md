@@ -20,16 +20,12 @@ Public MCP server and skill bundle focused on `sage.algebras.fusion_rings` workf
 1. SageMath installed locally.
 2. `uv` installed (`https://docs.astral.sh/uv/`).
 
-## Install options for other clients
-
-### Option A: PyPI / `uvx` (recommended)
+## Local setup (recommended)
 ```bash
-uvx mcp-sagemath-fusion-rings
-```
-
-### Option B: npm / `npx` wrapper
-```bash
-npx -y mcp-sagemath-fusion-rings
+git clone https://github.com/cesarneyit-code/mcp-sagemath-fusion-ring.git
+cd mcp-sagemath-fusion-ring/mcp-sagemath-server
+uv sync
+uv run server.py
 ```
 
 ## Register MCP in Codex
@@ -37,7 +33,7 @@ npx -y mcp-sagemath-fusion-rings
 ```bash
 codex mcp add sagemath-mcp \
   --env SAGE_CMD=/Applications/SageMath-10-1.app/Contents/Frameworks/Sage.framework/Versions/Current/venv/bin/sage \
-  -- /Users/cesargalindo/.local/bin/uvx mcp-sagemath-fusion-rings
+  -- /usr/local/bin/uv run --project /ABSOLUTE/PATH/mcp-sagemath-fusion-ring/mcp-sagemath-server server.py
 ```
 
 ## Register MCP in Claude/Cursor style JSON
@@ -46,9 +42,12 @@ codex mcp add sagemath-mcp \
 {
   "mcpServers": {
     "sagemath-mcp": {
-      "command": "/Users/cesargalindo/.local/bin/uvx",
+      "command": "/usr/local/bin/uv",
       "args": [
-        "mcp-sagemath-fusion-rings"
+        "run",
+        "--project",
+        "/ABSOLUTE/PATH/mcp-sagemath-fusion-ring/mcp-sagemath-server",
+        "server.py"
       ],
       "env": {
         "SAGE_CMD": "/Applications/SageMath-10-1.app/Contents/Frameworks/Sage.framework/Versions/Current/venv/bin/sage"
@@ -66,24 +65,4 @@ codex mcp add sagemath-mcp \
 ## Notes
 1. Some Sage versions expose `test_braid_representation` instead of `check_braid_representation`.
 2. Use exact outputs first (cyclotomic form), then request numerical approximation if needed.
-3. Publication workflows are included:
-- `.github/workflows/publish-pypi.yml` (tag `pypi-v*`)
-- `.github/workflows/publish-npm.yml` (tag `npm-v*`)
-4. Publish auth fallback is enabled:
-- PyPI: uses `PYPI_API_TOKEN` if present; otherwise uses Trusted Publishing (OIDC).
-- npm: uses `NPM_TOKEN` if present; otherwise uses Trusted Publishing (`npm publish --provenance`).
-
-## Release tags
-1. PyPI release:
-```bash
-git tag pypi-v0.2.0
-git push origin pypi-v0.2.0
-```
-2. npm wrapper release:
-```bash
-git tag npm-v0.2.0
-git push origin npm-v0.2.0
-```
-3. If workflows fail with auth errors:
-- Set GitHub secret `PYPI_API_TOKEN` (PyPI API token for project/package scope).
-- Set GitHub secret `NPM_TOKEN` (npm automation token), or configure npm Trusted Publishing for this repo.
+3. This repo intentionally uses local execution from source; no automatic registry publication is required.

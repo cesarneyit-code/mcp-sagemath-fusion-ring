@@ -13,6 +13,7 @@ MCP server to run SageMath from Codex/Claude with dedicated `FusionRing` helpers
 ## Local run (for development)
 ```bash
 cd /ABSOLUTE/PATH/TO/mcp-sagemath-fusion-ring/mcp-sagemath-server
+uv sync
 uv run server.py
 ```
 
@@ -21,21 +22,11 @@ If your Sage command is not `sage`, set:
 export SAGE_CMD="/path/to/sage"
 ```
 
-## Install from PyPI (planned target)
-```bash
-uv tool install mcp-sagemath-fusion-rings
-```
-
-Or one-shot execution:
-```bash
-uvx mcp-sagemath-fusion-rings
-```
-
 ## Register in Codex
 ```bash
 codex mcp add sagemath-mcp \
   --env SAGE_CMD=/path/to/sage \
-  -- /Users/cesargalindo/.local/bin/uvx mcp-sagemath-fusion-rings
+  -- /usr/local/bin/uv run --project /ABSOLUTE/PATH/TO/mcp-sagemath-fusion-ring/mcp-sagemath-server server.py
 ```
 
 ## Example requests
