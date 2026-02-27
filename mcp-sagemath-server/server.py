@@ -216,10 +216,14 @@ def sage_eval(expression: str, timeout_seconds: int = 20) -> str:
     """
     code = (
         "from sage.all import *\n"
-        "from sage.misc.sage_eval import sage_eval\n"
-        f"expr = {expression!r}\n"
-        "result = sage_eval(expr, locals())\n"
-        "print(result)\n"
+        f"_block = {expression!r}\n"
+        "_parsed = preparse(_block)\n"
+        "try:\n"
+        "    _r = eval(compile(_parsed, '<expr>', 'eval'))\n"
+        "    if _r is not None:\n"
+        "        print(_r)\n"
+        "except SyntaxError:\n"
+        "    exec(compile(_parsed, '<block>', 'exec'))\n"
     )
     result = _run_sage(code, timeout_seconds=timeout_seconds)
     return _format_result(result)
@@ -350,9 +354,14 @@ def fusion_ring_eval(
         "basis = FR.basis()\n"
         "order = FR.get_order()\n"
         "simples = [FR(w) for w in order]\n"
-        f"expr = {expression!r}\n"
-        "result = sage_eval(expr, locals())\n"
-        "print(result)\n"
+        f"_block = {expression!r}\n"
+        "_parsed = preparse(_block)\n"
+        "try:\n"
+        "    _r = eval(compile(_parsed, '<expr>', 'eval'))\n"
+        "    if _r is not None:\n"
+        "        print(_r)\n"
+        "except SyntaxError:\n"
+        "    exec(compile(_parsed, '<block>', 'exec'))\n"
     )
     result = _run_sage(code, timeout_seconds=timeout_seconds)
     return _format_result(result)

@@ -31,5 +31,8 @@ Issues = "https://github.com/cesarneyit-code/mcp-sagemath-fusion-ring/issues"
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
 [tool.setuptools]
 py-modules = ["server"]
